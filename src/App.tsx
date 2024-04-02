@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import Container from '@mui/material/Container'
+import UrlShortener from './UrlShortener' // Make sure the import path matches your file structure
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { CssBaseline } from '@mui/material'
+
+const queryClient = new QueryClient()
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+  shape: {
+    borderRadius: 8, // Adjust the border radius as you like
+  },
+  // ... other theme customizations
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container component="main" maxWidth="xs">
+          <UrlShortener />
+        </Container>
+      </ThemeProvider>
+    </QueryClientProvider>
+  )
 }
 
-export default App;
+export default App
